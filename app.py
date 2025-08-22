@@ -126,113 +126,113 @@ choice = st.sidebar.radio("Go to", [
 ])
 
 # -------------------------------
-# 🏠 HOME
+# 🏠 HOME (full version)
 # -------------------------------
 if choice == "🏠 Home":
     st.markdown("""
         <style>
-        .stApp {
-            background: linear-gradient(120deg, #e0e7ff 0%, #f0fdfa 100%) !important;
-        }
         .home-card {
-            background: #ffffffee;
-            border-radius: 24px;
-            padding: 2.5rem 2rem 2rem 2rem;
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
             margin-top: 2rem;
-            box-shadow: 0 8px 32px 0 #00000022;
-            max-width: 900px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            max-width: 800px;
             margin-left: auto;
             margin-right: auto;
+            text-align: center;
         }
         .home-title {
-            font-size: 2.7rem;
+            font-size: 2.2rem;
             font-weight: 700;
             color: #1e293b;
-            text-align: center;
             margin-bottom: 0.5rem;
         }
         .home-sub {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             color: #475569;
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-        .feature-list {
-            font-size: 1.13rem;
-            margin-top: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-        .feature-list li {
-            margin-bottom: 0.7rem;
+            margin-bottom: 2rem;
         }
         .section-title {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 600;
             color: #0f172a;
-            margin-top: 2rem;
+            margin-top: 1.8rem;
         }
         .section-text {
+            font-size: 1rem;
+            color: #334155;
+            margin-top: 0.3rem;
+            text-align: justify;
+        }
+        .feature-list {
+            text-align: left;
+            margin-top: 1.5rem;
             font-size: 1.05rem;
-            color: #374151;
-            margin-top: 0.5rem;
+            color: #1e293b;
+        }
+        .feature-list li {
+            margin-bottom: 0.6rem;
         }
         </style>
     """, unsafe_allow_html=True)
 
-    # Centered logo if available
-    logo_path = "assets/shopping.jpg"
+    # Center image
     cols = st.columns([1, 2, 1])
     with cols[1]:
-        try:
-            st.image(logo_path, width=320)
-        except Exception:
-            st.write("")
+        st.image("assets/shopping.jpg", width=280)
 
-    # Main Home Card with sections
+    # Card with explanations + features
     st.markdown("""
         <div class="home-card">
-            <div class="home-title">🛒 Grocery Price Optimization App</div>
-            <div class="home-sub">
+            <div class="home-title">🛒 Grocery Price Optimization</div>
+            <p class="home-sub">
                 Make smarter, cost-effective grocery decisions.<br>
-                <span style="color:#16a34a;font-weight:600;">Save money</span> and 
-                <span style="color:#0ea5e9;font-weight:600;">optimize your shopping</span> with data-driven insights!
-            </div>
-            <ul class="feature-list">
-                <li>📊 <b>Upload & Explore</b> your grocery datasets</li>
-                <li>📈 <b>Visualize</b> price trends and categories</li>
-                <li>🤖 <b>Train ML models</b> to predict price levels</li>
-                <li>🔮 <b>Predict</b> price level for new products</li>
-                <li>🛒 <b>Optimize</b> your grocery list with cheaper substitutes</li>
-            </ul>
+                Save money and optimize shopping with data-driven insights!
+            </p>
 
             <div class="section-title">📌 Project Background</div>
             <div class="section-text">
-                Grocery shopping is a frequent and essential activity for households. 
-                However, consumers often face challenges in identifying the best deals, 
-                comparing across brands, and making cost-effective decisions. 
-                With rising living costs, leveraging data-driven insights can help optimize grocery expenses.
+                Grocery shopping is one of the most frequent and necessary activities for households.  
+                However, many consumers struggle to identify the best deals, compare products across brands,  
+                and make cost-effective purchase decisions. With the rise in living costs,  
+                families need smarter ways to stretch their budgets.  
+                This project explores how **data analysis and machine learning** can help consumers  
+                make smarter, data-driven grocery choices.
             </div>
 
             <div class="section-title">🎯 Final Problem Statement</div>
             <div class="section-text">
-                How can we design a system that categorizes grocery items by price levels and 
-                provides recommendations for cheaper yet similar alternatives, 
-                enabling households to make informed, cost-saving choices?
+                The key challenge is:  
+                <b>How can we categorize grocery items by price levels and suggest cheaper yet similar alternatives?</b>  
+                The goal is to enable households to make informed, cost-saving choices without compromising  
+                on quality or variety.
             </div>
 
             <div class="section-title">❓ Gap in Knowledge</div>
             <div class="section-text">
-                While many e-commerce and retail platforms display prices, there is a lack of 
-                user-friendly tools that combine <b>price optimization, predictive modeling, 
-                and substitution suggestions</b>. This project bridges that gap by integrating 
-                <i>EDA, ML models, and optimization strategies</i> into a single interactive app.
+                While many retail platforms display prices and discounts,  
+                there is a lack of **interactive tools** that combine:  
+                <ul style="text-align:left;">
+                    <li>✅ Price optimization</li>
+                    <li>✅ Predictive modeling of price levels</li>
+                    <li>✅ Automatic substitution suggestions</li>
+                </ul>
+                This app bridges that gap by integrating **EDA, ML models,  
+                and grocery list optimization** into a single interactive platform.
             </div>
 
-            <div style="text-align:center; margin-top:2rem;">
-                <span style="color:#64748b;">Use the sidebar to get started!</span>
-            </div>
+            <div class="section-title">✨ Key Features of this App</div>
+            <ul class="feature-list">
+                <li>📊 Upload & Explore your grocery dataset</li>
+                <li>📈 Visualize price trends and categories (EDA)</li>
+                <li>🤖 Train ML models to predict price levels</li>
+                <li>🔮 Predict price level for new grocery items</li>
+                <li>🛒 Optimize your grocery list with cheaper substitutes</li>
+            </ul>
         </div>
     """, unsafe_allow_html=True)
+
 
 # -------------------------------
 # ℹ️ ABOUT
