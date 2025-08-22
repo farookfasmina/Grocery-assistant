@@ -1,0 +1,121 @@
+# 🛒 Grocery Price Optimization
+
+A mini-project that helps optimize grocery shopping by categorizing items into **price levels** and suggesting **cheaper substitutes**. It leverages **Machine Learning** to predict price levels based on product features and helps customers save money while shopping for groceries.
+
+The trained model is too large to be stored directly on GitHub. You can download the model file from Google Drive using the following link:
+
+[Download Model](https://drive.google.com/file/d/1pwWQsXuFqYS6MpwzKicuRy8-bxmrgvFu/view?usp=drive_link)
+
+## Features
+- **Upload & Explore**: Upload your own grocery dataset (CSV format) and explore basic statistics.
+- **Exploratory Data Analysis (EDA)**: Visualize price distributions and the most common grocery categories.
+- **Machine Learning Model**: Train models (Random Forest & Logistic Regression) to predict price levels.
+- **Optimize Grocery List**: Enter a list of items and the app will suggest cheaper substitutes and show the optimized cost.
+- **Predict Price Level**: Predict the price level for new grocery items based on their features.
+
+## Tech Stack
+- **Python**
+  - Pandas
+  - NumPy
+  - Scikit-Learn
+  - Matplotlib
+  - Seaborn
+  - RapidFuzz (for fuzzy matching)
+  - Joblib (for saving and loading models)
+- **Streamlit**: To create an interactive web app.
+
+## Installation
+
+### 1. Clone this repository:
+
+   ```bash
+   git clone https://github.com/your_username/grocery-price-optimization.git
+   cd grocery-price-optimization
+### 2. Install the required dependencies:
+
+pip install -r requirements.txt
+
+
+### 3. Make sure to have your dataset ready. The default dataset is in the data/ folder (or you can upload your own).
+
+Folder Structure
+
+The project directory structure is as follows:
+
+Grocery_project/
+│── app.py                  # Main Streamlit app file
+│── data/                   # Contains the CSV dataset (e.g., 'Grocery_data.csv')
+│── notebooks/              # Jupyter Notebooks (for development/testing)
+│── outputs/                # Folder to save trained models & results
+│   └── best_grocery_model.pkl  # Saved model after training
+│── assets/                 # Folder for images and other media files
+│   └── shopping.jpg        # Shopping-related image displayed in the Home page
+│── requirements.txt        # Python dependencies
+│── README.md               # Project documentation (this file)
+└── .gitignore              # Git ignore file to exclude unnecessary files
+
+How to Run
+
+Start the Streamlit app:
+
+streamlit run app.py
+
+
+Navigate to localhost:8501 in your browser.
+
+Features Breakdown
+1. Upload & Explore
+
+Upload your own grocery dataset in CSV format and explore the first few rows and summary statistics.
+
+2. Exploratory Data Analysis (EDA)
+
+Visualizes Price Distribution and the Top 10 Categories from the dataset.
+
+Helps analyze pricing patterns across different product categories.
+
+3. Machine Learning Model Training
+
+Trains a Random Forest and Logistic Regression model to predict the price levels of grocery items (e.g., Very Cheap, Cheap, Medium, Expensive, Very Expensive).
+
+The best-performing model is saved and used for further predictions.
+
+4. Optimize Grocery List
+
+Users can input a list of grocery items, and the app will:
+
+Match each item with the closest available product in the dataset.
+
+Suggest cheaper substitutes if available, optimizing the total cost of the shopping list.
+
+5. Predict Price Level
+
+Users can input product details (e.g., Category, Quantity, and Discount Percentage), and the model will predict the price level for the item.
+
+How to Contribute
+
+Fork the repository.
+
+Create your feature branch (git checkout -b feature/feature-name).
+
+Commit your changes (git commit -am 'Add new feature').
+
+Push to the branch (git push origin feature/feature-name).
+
+Create a new pull request.
+
+License
+
+This project is licensed under the MIT License - see the LICENSE
+ file for details.
+
+Acknowledgments
+
+Dataset Source: You can use your own grocery dataset or find publicly available datasets like those on Kaggle
+.
+
+Streamlit: Great tool for building interactive web apps.
+
+Scikit-learn: Powerful machine learning library used to train models.
+
+Pandas/Matplotlib/Seaborn: Data manipulation and visualization libraries.
