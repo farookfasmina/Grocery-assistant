@@ -129,12 +129,73 @@ choice = st.sidebar.radio("Go to", [
 # 🏠 HOME
 # -------------------------------
 if choice == "🏠 Home":
-    st.title("🛒 Grocery Price Optimization App")
-    st.image("assets/shopping.jpg", width=300, caption="Smarter Grocery Shopping")
     st.markdown("""
-    Welcome!  
-    Use this app to **analyze, train models, predict price levels**, and **optimize your grocery list**.
-    """)
+        <style>
+        .stApp {
+            background: linear-gradient(120deg, #e0e7ff 0%, #f0fdfa 100%) !important;
+        }
+        .home-card {
+            background: #ffffffee;
+            border-radius: 24px;
+            padding: 2.5rem 2rem 2rem 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 8px 32px 0 #00000022;
+            max-width: 750px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .home-title {
+            font-size: 2.7rem;
+            font-weight: 700;
+            color: #1e293b;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        .home-sub {
+            font-size: 1.25rem;
+            color: #475569;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .feature-list {
+            font-size: 1.13rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .feature-list li {
+            margin-bottom: 0.7rem;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+
+    # Centered, larger logo if available
+    logo_path = "assets/shopping.jpg"
+    cols = st.columns([1, 2, 1])
+    with cols[1]:
+        try:
+            st.image(logo_path, width=320)
+        except Exception:
+            st.write("")  # fallback if image not found
+
+    st.markdown("""
+        <div class="home-card">
+            <div class="home-title">🛒 Grocery Price Optimization App</div>
+            <div class="home-sub">
+                Make smarter, cost-effective grocery decisions.<br>
+                <span style="color:#16a34a;font-weight:600;">Save money</span> and <span style="color:#0ea5e9;font-weight:600;">optimize your shopping</span> with data-driven insights!
+            </div>
+            <ul class="feature-list">
+                <li>📊 <b>Upload & Explore</b> your grocery datasets</li>
+                <li>📈 <b>Visualize</b> price trends and categories</li>
+                <li>🤖 <b>Train ML models</b> to predict price levels</li>
+                <li>🔮 <b>Predict</b> price level for new products</li>
+                 <li>🛒 <b>Optimize</b> your grocery list with cheaper substitutes</li>
+            </ul>
+            <div style="text-align:center; margin-top:2rem;">
+                <span style="color:#64748b;">Use the sidebar to get started!</span>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
 
 # -------------------------------
 # ℹ️ ABOUT
