@@ -195,6 +195,31 @@ if choice == "🏠 Home":
                 <span style="color:#64748b;">Use the sidebar to get started!</span>
             </div>
         </div>
+        <div class="section-title">📌 Project Background</div>
+            <div class="section-text">
+                Grocery shopping is a frequent and essential activity for households. However, consumers often face challenges 
+                in identifying the best deals, comparing across brands, and making cost-effective decisions. 
+                With rising living costs, leveraging data-driven insights can help optimize grocery expenses.
+            </div>
+
+            <div class="section-title">🎯 Final Problem Statement</div>
+            <div class="section-text">
+                How can we design a system that categorizes grocery items by price levels and provides recommendations 
+                for cheaper yet similar alternatives, enabling households to make informed, cost-saving choices?
+            </div>
+
+            <div class="section-title">❓ Gap in Knowledge</div>
+            <div class="section-text">
+                While many e-commerce and retail platforms display prices, there is a lack of user-friendly tools that 
+                combine <b>price optimization, predictive modeling, and substitution suggestions</b>. 
+                This project bridges that gap by integrating <i>EDA, ML models, and optimization strategies</i> into 
+                a single interactive app.
+            </div>
+
+            <div style="text-align:center; margin-top:2rem;">
+                <span style="color:#64748b;">Use the sidebar to get started!</span>
+            </div>
+        </div>
     """, unsafe_allow_html=True)
 
 # -------------------------------
