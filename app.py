@@ -140,7 +140,7 @@ if choice == "🏠 Home":
             padding: 2.5rem 2rem 2rem 2rem;
             margin-top: 2rem;
             box-shadow: 0 8px 32px 0 #00000022;
-            max-width: 750px;
+            max-width: 900px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -165,18 +165,30 @@ if choice == "🏠 Home":
         .feature-list li {
             margin-bottom: 0.7rem;
         }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin-top: 2rem;
+        }
+        .section-text {
+            font-size: 1.05rem;
+            color: #374151;
+            margin-top: 0.5rem;
+        }
         </style>
     """, unsafe_allow_html=True)
 
-    # Centered, larger logo if available
+    # Centered logo if available
     logo_path = "assets/shopping.jpg"
     cols = st.columns([1, 2, 1])
     with cols[1]:
         try:
             st.image(logo_path, width=320)
         except Exception:
-            st.write("")  # fallback if image not found
+            st.write("")
 
+    # Main Home Card
     st.markdown("""
         <div class="home-card">
             <div class="home-title">🛒 Grocery Price Optimization App</div>
@@ -189,13 +201,10 @@ if choice == "🏠 Home":
                 <li>📈 <b>Visualize</b> price trends and categories</li>
                 <li>🤖 <b>Train ML models</b> to predict price levels</li>
                 <li>🔮 <b>Predict</b> price level for new products</li>
-                 <li>🛒 <b>Optimize</b> your grocery list with cheaper substitutes</li>
+                <li>🛒 <b>Optimize</b> your grocery list with cheaper substitutes</li>
             </ul>
-            <div style="text-align:center; margin-top:2rem;">
-                <span style="color:#64748b;">Use the sidebar to get started!</span>
-            </div>
-        </div>
-        <div class="section-title">📌 Project Background</div>
+
+            <div class="section-title">📌 Project Background</div>
             <div class="section-text">
                 Grocery shopping is a frequent and essential activity for households. However, consumers often face challenges 
                 in identifying the best deals, comparing across brands, and making cost-effective decisions. 
