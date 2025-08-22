@@ -126,7 +126,7 @@ choice = st.sidebar.radio("Go to", [
 ])
 
 # -------------------------------
-# 🏠 HOME (full version)
+# 🏠 HOME (full version, fixed)
 # -------------------------------
 if choice == "🏠 Home":
     st.markdown("""
@@ -182,7 +182,7 @@ if choice == "🏠 Home":
     with cols[1]:
         st.image("assets/shopping.jpg", width=280)
 
-    # Card with explanations + features
+    # Wrap ALL content inside st.markdown with unsafe_allow_html=True
     st.markdown("""
         <div class="home-card">
             <div class="home-title">🛒 Grocery Price Optimization</div>
@@ -197,14 +197,14 @@ if choice == "🏠 Home":
                 However, many consumers struggle to identify the best deals, compare products across brands,  
                 and make cost-effective purchase decisions. With the rise in living costs,  
                 families need smarter ways to stretch their budgets.  
-                This project explores how **data analysis and machine learning** can help consumers  
+                This project explores how <b>data analysis and machine learning</b> can help consumers  
                 make smarter, data-driven grocery choices.
             </div>
 
             <div class="section-title">🎯 Final Problem Statement</div>
             <div class="section-text">
-                The key challenge is:  
-                <b>How can we categorize grocery items by price levels and suggest cheaper yet similar alternatives?</b>  
+                The key challenge is:<br>
+                <b>How can we categorize grocery items by price levels and suggest cheaper yet similar alternatives?</b><br>
                 The goal is to enable households to make informed, cost-saving choices without compromising  
                 on quality or variety.
             </div>
@@ -212,14 +212,14 @@ if choice == "🏠 Home":
             <div class="section-title">❓ Gap in Knowledge</div>
             <div class="section-text">
                 While many retail platforms display prices and discounts,  
-                there is a lack of **interactive tools** that combine:  
+                there is a lack of <b>interactive tools</b> that combine:  
                 <ul style="text-align:left;">
                     <li>✅ Price optimization</li>
                     <li>✅ Predictive modeling of price levels</li>
                     <li>✅ Automatic substitution suggestions</li>
                 </ul>
-                This app bridges that gap by integrating **EDA, ML models,  
-                and grocery list optimization** into a single interactive platform.
+                This app bridges that gap by integrating <b>EDA, ML models,  
+                and grocery list optimization</b> into a single interactive platform.
             </div>
 
             <div class="section-title">✨ Key Features of this App</div>
@@ -232,6 +232,7 @@ if choice == "🏠 Home":
             </ul>
         </div>
     """, unsafe_allow_html=True)
+
 
 
 # -------------------------------
