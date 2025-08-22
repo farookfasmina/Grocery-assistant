@@ -188,13 +188,14 @@ if choice == "🏠 Home":
         except Exception:
             st.write("")
 
-    # Main Home Card
+    # Main Home Card with sections
     st.markdown("""
         <div class="home-card">
             <div class="home-title">🛒 Grocery Price Optimization App</div>
             <div class="home-sub">
                 Make smarter, cost-effective grocery decisions.<br>
-                <span style="color:#16a34a;font-weight:600;">Save money</span> and <span style="color:#0ea5e9;font-weight:600;">optimize your shopping</span> with data-driven insights!
+                <span style="color:#16a34a;font-weight:600;">Save money</span> and 
+                <span style="color:#0ea5e9;font-weight:600;">optimize your shopping</span> with data-driven insights!
             </div>
             <ul class="feature-list">
                 <li>📊 <b>Upload & Explore</b> your grocery datasets</li>
@@ -206,23 +207,25 @@ if choice == "🏠 Home":
 
             <div class="section-title">📌 Project Background</div>
             <div class="section-text">
-                Grocery shopping is a frequent and essential activity for households. However, consumers often face challenges 
-                in identifying the best deals, comparing across brands, and making cost-effective decisions. 
+                Grocery shopping is a frequent and essential activity for households. 
+                However, consumers often face challenges in identifying the best deals, 
+                comparing across brands, and making cost-effective decisions. 
                 With rising living costs, leveraging data-driven insights can help optimize grocery expenses.
             </div>
 
             <div class="section-title">🎯 Final Problem Statement</div>
             <div class="section-text">
-                How can we design a system that categorizes grocery items by price levels and provides recommendations 
-                for cheaper yet similar alternatives, enabling households to make informed, cost-saving choices?
+                How can we design a system that categorizes grocery items by price levels and 
+                provides recommendations for cheaper yet similar alternatives, 
+                enabling households to make informed, cost-saving choices?
             </div>
 
             <div class="section-title">❓ Gap in Knowledge</div>
             <div class="section-text">
-                While many e-commerce and retail platforms display prices, there is a lack of user-friendly tools that 
-                combine <b>price optimization, predictive modeling, and substitution suggestions</b>. 
-                This project bridges that gap by integrating <i>EDA, ML models, and optimization strategies</i> into 
-                a single interactive app.
+                While many e-commerce and retail platforms display prices, there is a lack of 
+                user-friendly tools that combine <b>price optimization, predictive modeling, 
+                and substitution suggestions</b>. This project bridges that gap by integrating 
+                <i>EDA, ML models, and optimization strategies</i> into a single interactive app.
             </div>
 
             <div style="text-align:center; margin-top:2rem;">
