@@ -126,7 +126,7 @@ choice = st.sidebar.radio("Go to", [
 ])
 
 # -------------------------------
-# 🏠 HOME (full version, fixed)
+# 🏠 HOME (with background/problem/gap)
 # -------------------------------
 if choice == "🏠 Home":
     st.markdown("""
@@ -134,30 +134,30 @@ if choice == "🏠 Home":
         .home-card {
             background: #ffffff;
             border-radius: 20px;
-            padding: 2.5rem 2rem;
+            padding: 2rem;
             margin-top: 2rem;
             box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-            max-width: 800px;
+            max-width: 850px;
             margin-left: auto;
             margin-right: auto;
-            text-align: center;
         }
         .home-title {
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 700;
             color: #1e293b;
-            margin-bottom: 0.5rem;
+            text-align: center;
         }
         .home-sub {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #475569;
-            margin-bottom: 2rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
         }
         .section-title {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             font-weight: 600;
             color: #0f172a;
-            margin-top: 1.8rem;
+            margin-top: 1.5rem;
         }
         .section-text {
             font-size: 1rem;
@@ -165,24 +165,15 @@ if choice == "🏠 Home":
             margin-top: 0.3rem;
             text-align: justify;
         }
-        .feature-list {
-            text-align: left;
-            margin-top: 1.5rem;
-            font-size: 1.05rem;
-            color: #1e293b;
-        }
-        .feature-list li {
-            margin-bottom: 0.6rem;
-        }
         </style>
     """, unsafe_allow_html=True)
 
-    # Center image
-    cols = st.columns([1, 2, 1])
+    # Centered image
+    cols = st.columns([1,2,1])
     with cols[1]:
-        st.image("assets/shopping.jpg", width=280)
+        st.image("assets/shopping.jpg", width=260)
 
-    # Wrap ALL content inside st.markdown with unsafe_allow_html=True
+    # Main card
     st.markdown("""
         <div class="home-card">
             <div class="home-title">🛒 Grocery Price Optimization</div>
@@ -193,45 +184,32 @@ if choice == "🏠 Home":
 
             <div class="section-title">📌 Project Background</div>
             <div class="section-text">
-                Grocery shopping is one of the most frequent and necessary activities for households.  
-                However, many consumers struggle to identify the best deals, compare products across brands,  
-                and make cost-effective purchase decisions. With the rise in living costs,  
-                families need smarter ways to stretch their budgets.  
-                This project explores how <b>data analysis and machine learning</b> can help consumers  
-                make smarter, data-driven grocery choices.
+                Grocery shopping is one of the most frequent and necessary household tasks.  
+                However, consumers often struggle to compare across brands and find the best deals.  
+                With increasing living costs, smarter tools are needed to stretch household budgets.  
+                This project leverages <b>data analysis</b> and <b>machine learning</b>  
+                to support cost-effective grocery decisions.
             </div>
 
             <div class="section-title">🎯 Final Problem Statement</div>
             <div class="section-text">
-                The key challenge is:<br>
-                <b>How can we categorize grocery items by price levels and suggest cheaper yet similar alternatives?</b><br>
-                The goal is to enable households to make informed, cost-saving choices without compromising  
-                on quality or variety.
+                <b>How can grocery items be categorized by price levels and paired with cheaper alternatives,  
+                without compromising quality?</b>  
+                The objective is to help households save money while making informed choices.
             </div>
 
             <div class="section-title">❓ Gap in Knowledge</div>
             <div class="section-text">
-                While many retail platforms display prices and discounts,  
-                there is a lack of <b>interactive tools</b> that combine:  
-                <ul style="text-align:left;">
-                    <li>✅ Price optimization</li>
-                    <li>✅ Predictive modeling of price levels</li>
-                    <li>✅ Automatic substitution suggestions</li>
-                </ul>
-                This app bridges that gap by integrating <b>EDA, ML models,  
-                and grocery list optimization</b> into a single interactive platform.
+                Existing retail platforms display prices but lack **interactive, user-friendly tools** that combine:  
+                ✅ Price optimization<br>
+                ✅ Predictive modeling of price levels<br>
+                ✅ Cheaper substitute recommendations  
+                <br>
+                This app fills the gap by uniting <b>EDA, ML models, and optimization</b> in a single platform.
             </div>
-
-            <div class="section-title">✨ Key Features of this App</div>
-            <ul class="feature-list">
-                <li>📊 Upload & Explore your grocery dataset</li>
-                <li>📈 Visualize price trends and categories (EDA)</li>
-                <li>🤖 Train ML models to predict price levels</li>
-                <li>🔮 Predict price level for new grocery items</li>
-                <li>🛒 Optimize your grocery list with cheaper substitutes</li>
-            </ul>
         </div>
     """, unsafe_allow_html=True)
+
 
 
 
