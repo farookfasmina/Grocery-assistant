@@ -177,7 +177,7 @@ if choice == "🏠 Home":
 
         <div class="section-title">❓ Gap in Knowledge</div>
         <div class="section-text">
-            Existing retail platforms display prices but lack <b>interactive, user-friendly tools</b> that combine:  
+            Existing retail platforms display prices but lack <b>interactive, user-friendly tools</b> that combine:<br>  
             ✅ Price optimization<br>
             ✅ Predictive modeling of price levels<br>
             ✅ Cheaper substitute recommendations  
