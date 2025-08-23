@@ -18,6 +18,33 @@ try:
 except Exception:
     HAS_RAPIDFUZZ = False
 
+def standardize_columns(df: pd.DataFrame) -> pd.DataFrame:
+    """Rename uploaded dataset columns to match required names (case-insensitive)."""
+    rename_map = {
+        "product": "Product Name",
+        "productname": "Product Name",
+        "item": "Product Name",
+        "product name": "Product Name",
+
+        "category": "Category",
+        "cat": "Category",
+
+        "discounted price": "Discounted Price (Rs.)",
+        "discount_price": "Discounted Price (Rs.)",
+        "price": "Discounted Price (Rs.)",
+
+        "original price": "Original Price (Rs.)",
+        "orig price": "Original Price (Rs.)",
+
+        "quantity": "Quantity",
+        "qty": "Quantity",
+        "amount": "Quantity"
+    }
+
+    df = df.rename(columns={c: rename_map.get(c.lower().strip(), c) for c in df.columns})
+    return df
+
+
 
 st.set_page_config(page_title="🛒 Grocery Price Optimization", layout="wide")
 
@@ -35,16 +62,21 @@ st.markdown("""
 @st.cache_data
 def load_default_data():
     try:
-        return pd.read_csv("data/Grocery_data (1).csv")
+        df = pd.read_csv("data/Grocery_data (1).csv")
+        return standardize_columns(df)
     except Exception:
         return pd.DataFrame()
+
 
 if "df" not in st.session_state:
     st.session_state.df = load_default_data()
 
 def require_columns(df: pd.DataFrame, required: list) -> tuple[bool, list]:
-    missing = [c for c in required if c not in df.columns]
+    """Check required columns in a case-insensitive way."""
+    df_cols = {c.lower(): c for c in df.columns}
+    missing = [c for c in required if c.lower() not in df_cols]
     return (len(missing) == 0, missing)
+
 
 
 def add_derived_columns(df: pd.DataFrame) -> pd.DataFrame:
@@ -240,8 +272,13 @@ elif choice == "📊 Upload & Explore":
     st.title("📊 Upload & Explore Dataset")
     uploaded = st.file_uploader("Upload a CSV file", type=["csv"])
     if uploaded:
-        st.session_state.df = pd.read_csv(uploaded)
-        st.success("✅ Dataset uploaded.")
+        df = pd.read_csv(uploaded)
+
+        # 🔹 Use the helper function we defined earlier
+        df = standardize_columns(df)
+
+        st.session_state.df = df
+        st.success("✅ Dataset uploaded and standardized.")
 
     df = st.session_state.df
     if not df.empty:
@@ -250,26 +287,72 @@ elif choice == "📊 Upload & Explore":
     else:
         st.info("👉 Upload a CSV to continue.")
 
+
+# -------------------------------
+# 📈 EDA
+# -------------------------------
 elif choice == "📈 EDA":
     st.title("📈 Exploratory Data Analysis")
+
     df = st.session_state.df
     needed = ['Category', 'Discounted Price (Rs.)']
     ok, missing = require_columns(df, needed)
 
     if df.empty or not ok:
-        st.warning(f"⚠️ Need columns: {', '.join(missing or needed)}")
+        st.warning(f"⚠️ Need columns: {', '.join(missing or needed)}. Upload a compatible dataset.")
     else:
+        # Derive clean DF
         dfe = add_derived_columns(df)
+        dfe = dfe.dropna(subset=['Discounted Price (Rs.)'])
 
-        st.subheader("Price Distribution")
-        fig, ax = plt.subplots()
+        # 1. Price distribution
+        st.subheader("Price Distribution (All Products)")
+        fig, ax = plt.subplots(figsize=(8, 5))
         sns.histplot(dfe['Discounted Price (Rs.)'], bins=50, kde=True, ax=ax)
+        ax.set_title("Distribution of Discounted Prices")
         st.pyplot(fig)
 
-        st.subheader("Top Categories")
-        fig, ax = plt.subplots()
-        dfe['Category'].value_counts().head(10).plot(kind='bar', ax=ax)
+        # 2. Top 10 categories
+        st.subheader("Top 10 Categories (by Product Count)")
+        fig, ax = plt.subplots(figsize=(10, 5))
+        dfe['Category'].value_counts().head(10).plot(kind='bar', ax=ax, color="skyblue")
+        ax.set_ylabel("Count")
+        ax.set_title("Most Common Categories")
         st.pyplot(fig)
+
+        # 3. Boxplot: Prices by Category
+        st.subheader("Price Distribution by Category")
+        fig, ax = plt.subplots(figsize=(12, 6))
+        sns.boxplot(data=dfe, x="Category", y="Discounted Price (Rs.)", ax=ax)
+        ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha="right")
+        ax.set_title("Boxplot of Prices by Category")
+        st.pyplot(fig)
+
+        # 4. Average price per category
+        st.subheader("Average Discounted Price per Category")
+        avg_prices = dfe.groupby("Category")["Discounted Price (Rs.)"].mean().sort_values()
+        fig, ax = plt.subplots(figsize=(10, 6))
+        avg_prices.plot(kind="barh", ax=ax, color="lightgreen")
+        ax.set_xlabel("Average Price (Rs.)")
+        ax.set_title("Category-wise Average Price")
+        st.pyplot(fig)
+
+        # 5. Discount percentage distribution
+        st.subheader("Distribution of Discounts (%)")
+        fig, ax = plt.subplots(figsize=(8, 5))
+        sns.histplot(dfe["Discount_Percent"], bins=40, kde=True, ax=ax, color="orange")
+        ax.set_title("Discount Percentage Distribution")
+        st.pyplot(fig)
+
+        # 6. Correlation heatmap
+        st.subheader("Correlation Heatmap")
+        num_cols = ["Quantity", "Discounted Price (Rs.)", "Original Price (Rs.)", "Discount_Percent"]
+        corr = dfe[num_cols].corr()
+        fig, ax = plt.subplots(figsize=(6, 4))
+        sns.heatmap(corr, annot=True, cmap="coolwarm", fmt=".2f", ax=ax)
+        ax.set_title("Correlation between Numerical Features")
+        st.pyplot(fig)
+
 
 
 elif choice == "🤖 Train Model":
