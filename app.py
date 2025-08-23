@@ -1,4 +1,3 @@
-# app.py
 import os
 import streamlit as st
 import pandas as pd
@@ -12,16 +11,14 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 
-# Optional fuzzy matching
+
 try:
     from rapidfuzz import process
     HAS_RAPIDFUZZ = True
 except Exception:
     HAS_RAPIDFUZZ = False
 
-# -------------------------------
-# 🎨 Page Config & Styling
-# -------------------------------
+
 st.set_page_config(page_title="🛒 Grocery Price Optimization", layout="wide")
 
 st.markdown("""
@@ -34,9 +31,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# -------------------------------
-# 📂 Load / Hold Dataset
-# -------------------------------
+
 @st.cache_data
 def load_default_data():
     try:
@@ -51,13 +46,11 @@ def require_columns(df: pd.DataFrame, required: list) -> tuple[bool, list]:
     missing = [c for c in required if c not in df.columns]
     return (len(missing) == 0, missing)
 
-# -------------------------------
-# 🧰 Preprocessing Helpers
-# -------------------------------
+
 def add_derived_columns(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
 
-    # Ensure required columns exist
+    
     if 'Discounted Price (Rs.)' not in df.columns:
         df['Discounted Price (Rs.)'] = np.nan
     if 'Original Price (Rs.)' not in df.columns:
@@ -67,7 +60,7 @@ def add_derived_columns(df: pd.DataFrame) -> pd.DataFrame:
     if 'Category' not in df.columns:
         df['Category'] = "Unknown"
 
-    # Conversions
+   
     df['Discounted Price (Rs.)'] = pd.to_numeric(df['Discounted Price (Rs.)'], errors='coerce')
     df['Original Price (Rs.)'] = pd.to_numeric(df['Original Price (Rs.)'], errors='coerce')
 
@@ -76,16 +69,16 @@ def add_derived_columns(df: pd.DataFrame) -> pd.DataFrame:
 
     df['Category'] = df['Category'].astype(str).fillna("Unknown")
 
-    # Clean rows
+    
     df = df[df['Discounted Price (Rs.)'] > 0]
 
-    # Discount %
+    
     with np.errstate(divide='ignore', invalid='ignore'):
         disc = (df['Original Price (Rs.)'] - df['Discounted Price (Rs.)']) / df['Original Price (Rs.)'] * 100
     disc = disc.replace([np.inf, -np.inf], np.nan).fillna(0)
     df['Discount_Percent'] = disc.clip(0, 100)
 
-    # Price bins
+    
     bins = [0, 50, 200, 500, 1000, np.inf]
     labels = ["Very Cheap", "Cheap", "Medium", "Expensive", "Very Expensive"]
     df['Price_Level'] = pd.cut(df['Discounted Price (Rs.)'], bins=bins, labels=labels, include_lowest=True)
@@ -116,9 +109,7 @@ def prepare_single_features(category: str, quantity: float, discount_percent: fl
     return pd.DataFrame([[cat_enc, quantity, discount_percent]],
                         columns=['Category_enc', 'Quantity', 'Discount_Percent'])
 
-# -------------------------------
-# 📍 Sidebar Navigation
-# -------------------------------
+
 st.sidebar.title("🛒 Grocery App Navigation")
 choice = st.sidebar.radio("Go to", [
     "🏠 Home", "ℹ️ About", "📊 Upload & Explore", "📈 EDA",
@@ -126,31 +117,17 @@ choice = st.sidebar.radio("Go to", [
 ])
 
 if choice == "🏠 Home":
-    st.markdown(
-        """
-        <style>
-        .section-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #0f172a;
-            margin-top: 1.2rem;
-        }
-        .section-text {
-            font-size: 1rem;
-            color: #334155;
-            margin-top: 0.3rem;
-            text-align: justify;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
+   
+    st.write("")  
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        try:
+            st.image("assets/shopping.jpg", use_container_width=False, width=350)
+        except Exception:
+            st.warning("⚠️ Shopping image not found. Please place 'shopping.jpg' inside the 'assets' folder.")
 
-    # Centered image
-    cols = st.columns([1, 2, 1])
-    with cols[1]:
-        st.image("assets/shopping.jpg", width=280)
 
+    
     st.markdown(
         """
         <h1 style='text-align:center;'>🛒 Grocery Price Optimization</h1>
@@ -158,54 +135,107 @@ if choice == "🏠 Home":
             Make smarter, cost-effective grocery decisions.<br>
             Save money and optimize shopping with data-driven insights!
         </p>
-
-        <div class="section-title">📌 Project Background</div>
-        <div class="section-text">
-            Grocery shopping is one of the most frequent and necessary household tasks.  
-            However, consumers often struggle to compare across brands and find the best deals.  
-            With increasing living costs, smarter tools are needed to stretch household budgets.  
-            This project leverages <b>data analysis</b> and <b>machine learning</b>  
-            to support cost-effective grocery decisions.
-        </div>
-
-        <div class="section-title">🎯 Final Problem Statement</div>
-        <div class="section-text">
-            <b>How can grocery items be categorized by price levels and paired with cheaper alternatives,  
-            without compromising quality?</b>  
-            The objective is to help households save money while making informed choices.
-        </div>
-
-        <div class="section-title">❓ Gap in Knowledge</div>
-        <div class="section-text">
-            Existing retail platforms display prices but lack <b>interactive, user-friendly tools</b> that combine:<br>  
-            ✅ Price optimization<br>
-            ✅ Predictive modeling of price levels<br>
-            ✅ Cheaper substitute recommendations  
-            <br>
-            This app fills the gap by uniting <b>EDA, ML models, and optimization</b> in a single platform.
-        </div>
         """,
         unsafe_allow_html=True
     )
 
+    
+    st.subheader("📌 Project Background")
+    st.markdown(
+        """
+        Grocery shopping is one of the most frequent and necessary household tasks.  
+        However, consumers often struggle to compare across brands and find the best deals.  
+        With increasing living costs, smarter tools are needed to stretch household budgets.  
+        This project leverages **data analysis** and **machine learning**  
+        to support cost-effective grocery decisions.
+        """
+    )
 
-# -------------------------------
-# ℹ️ ABOUT
-# -------------------------------
+    
+    st.subheader("🎯 Final Problem Statement")
+    st.markdown(
+        """
+        **How can grocery items be categorized by price levels and paired with cheaper alternatives,  
+        without compromising quality?**  
+
+        The objective is to help households save money while making informed choices.
+        """
+    )
+
+    
+    st.subheader("❓ Gap in Knowledge")
+    st.markdown(
+        """
+        Existing retail platforms display prices but lack **interactive, user-friendly tools** that combine:  
+
+        - ✅ Price optimization  
+        - ✅ Predictive modeling of price levels  
+        - ✅ Cheaper substitute recommendations  
+
+        This app fills the gap by uniting **EDA, ML models, and optimization** in a single platform.
+        """
+    )
+
+   
+    st.subheader("🔍 Research Questions")
+    st.markdown(
+        """
+        1. Which features (product category, brand, store location, price fluctuations, user preferences, etc.)  
+           most significantly influence the total cost savings in grocery shopping?  
+        2. How accurately can machine learning and optimization models (e.g., Linear Programming, Integer Programming,  
+           K-Nearest Neighbors for substitutes, or NLP-based matching algorithms) identify the cheapest combination  
+           of grocery items across multiple stores?  
+        3. What is the most interpretable and practical model or algorithm that can be deployed in a  
+           consumer-facing Smart Grocery Shopping Assistant to optimize shopping cost and provide useful recommendations?  
+        """
+    )
+
+    st.subheader("🎯 Research Objectives")
+    st.markdown(
+        """
+        1. To develop an **NLP-based system** that accurately interprets and maps free-text grocery lists  
+           to structured product entries across multiple stores.  
+        2. To design and implement an **optimization algorithm** that selects the cheapest combination  
+           of stores and items to minimize total shopping cost.  
+        3. To explore **machine learning techniques** for predicting missing prices and recommending  
+           cost-saving substitutes or alternative brands.  
+        """
+    )
+
+    
+    st.subheader("📂 Availability of Data")
+    st.markdown(
+        """
+        The dataset is sourced from publicly available grocery data (CSV format).  
+        Users can also **upload their own grocery datasets** for analysis.  
+        This ensures flexibility and adaptability across different stores and regions.
+        """
+    )
+
+
 elif choice == "ℹ️ About":
     st.title("ℹ️ About this Project")
-    st.markdown("""
-    This mini project tackles **Grocery Price Optimization** using:
-    - 📊 **EDA** for insights  
-    - 🤖 **ML models** to categorize products  
-    - 🛒 **Optimization** to suggest cheaper substitutes  
+    st.image("https://cdn-icons-png.flaticon.com/512/2331/2331970.png", width=160, caption="About Project")
 
-    **Stack**: Python, Pandas, Seaborn, Scikit-Learn, Streamlit
+    st.markdown("""
+    This mini project tackles **Grocery Price Optimization** with **EDA + ML**.  
+    We categorize items into **Very Cheap → Very Expensive**, and help users optimize shopping lists.  
+
+    **Stack**: Python, Pandas, Seaborn, Scikit-Learn, Streamlit.
     """)
 
-# -------------------------------
-# 📊 UPLOAD & EXPLORE
-# -------------------------------
+    st.markdown("---")
+    st.subheader("👩‍💻 Group Members")
+    st.markdown("""
+    | Name        | Student ID        |
+    |-------------|------------------|
+    | **S.F. Saheela** | ITBIN-2211-0274 |
+    | **F.F. Fasmina** | ITBIN-2211-0116 |
+    | **M.S. Labeeba** | ITBIN-2211-0215 |
+    | **S.M. Sukry**   | ITBIN-2211-0297 |
+    """)
+
+
 elif choice == "📊 Upload & Explore":
     st.title("📊 Upload & Explore Dataset")
     uploaded = st.file_uploader("Upload a CSV file", type=["csv"])
@@ -220,9 +250,6 @@ elif choice == "📊 Upload & Explore":
     else:
         st.info("👉 Upload a CSV to continue.")
 
-# -------------------------------
-# 📈 EDA
-# -------------------------------
 elif choice == "📈 EDA":
     st.title("📈 Exploratory Data Analysis")
     df = st.session_state.df
@@ -244,9 +271,7 @@ elif choice == "📈 EDA":
         dfe['Category'].value_counts().head(10).plot(kind='bar', ax=ax)
         st.pyplot(fig)
 
-# -------------------------------
-# 🤖 TRAIN MODEL
-# -------------------------------
+
 elif choice == "🤖 Train Model":
     st.title("🤖 Train ML Models")
     df = st.session_state.df
@@ -276,9 +301,7 @@ elif choice == "🤖 Train Model":
             joblib.dump(bundle, "outputs/best_grocery_model.pkl")
             st.success("✅ Model trained and saved locally.")
 
-# -------------------------------
-# 🔮 PREDICT PRICE LEVEL
-# -------------------------------
+
 elif choice == "🔮 Predict Price Level":
     st.title("🔮 Predict Price Level")
     try:
@@ -297,9 +320,7 @@ elif choice == "🔮 Predict Price Level":
             pred = model.predict(X)[0]
             st.success(f"Predicted Price Level: **{pred}**")
 
-# -------------------------------
-# 🛒 OPTIMIZE GROCERY LIST
-# -------------------------------
+
 elif choice == "🛒 Optimize Grocery List":
     st.title("🛒 Optimize Grocery List")
     df = st.session_state.df
